@@ -1,0 +1,20 @@
+/* https://www.w3schools.com/css/css3_buttons.asp */
+
+button {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50;
+  font-size: 44px;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#myId {
+  display: none;
+  font-size: xxx-large;
+}
+
