@@ -10,14 +10,20 @@ function readURL(input) {
 
   if (input.files && input.files[0]) {
 
+    //declare and init reader
     let reader = new FileReader();
-   
+    
     reader.onload = function (e) {
 			$('.image-upload-wrap').hide();
-			$('#loading').show();
+			$('#loading').show(); 
 			$('.file-upload-content').show();
+      console.log("an input uploaded");
 			$('.file-upload-image').attr('src', e.target.result);
-			$('.image-title').html(input.files[0].name);
+
+      // The following code is not in use.
+      // However, you can show the image name 
+      // by creating an element in your html file
+      $('.image-title').html(input.files[0].name); 
     };
     reader.readAsDataURL(input.files[0]);
     

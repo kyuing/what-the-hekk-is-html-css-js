@@ -1,7 +1,7 @@
 "use strict";
 
 const URL = 'https://teachablemachine.withgoogle.com/models/caXe1yJv9/';
-let model, maxPredictions, chartContainer,
+let model, maxPredictions, 
 resultTitle, resultExplain, resultComment,
 title, explain, comm;
 
@@ -10,16 +10,18 @@ async function init() {
 
   const modelURL = URL + 'model.json';
   const metadataURL = URL + 'metadata.json';
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses(); //number of classes trained 
+  model = await tmImage.load(modelURL, metadataURL);
+  maxPredictions = model.getTotalClasses(); //number of classes trained 
 }
 
-//fucntion predict() predicts matching image result up to maxPredictions
+//function predict() predicts matching image result up to # of maxPredictions
 async function predict() {
-  var image = document.getElementById('face-image');
-  const prediction = await model.predict(image, false); 
+  let image = document.getElementById('face-image');
+  const prediction = await model.predict(image, false);
+  console.log(prediction);
 
-  //The following code sorts onbjects from highest probability to lowest
+  //The following code sorts objects from highest probability to lowest
+  //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#sorting_array_of_objects
   prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
   console.log(prediction[0].className);
 
@@ -60,21 +62,23 @@ async function predict() {
       resultComment = '';
   }
 
+  //prepare the final result in text
   title ="<div class='" + prediction[0].className + "-result-title'>" + resultTitle + '</div>';
   explain = "<div class='result-explain pt-2'>" + resultExplain + '</div>';
   comm ="<div class='" + prediction[0].className + "-result-comment pt-2 pb-2'>" + resultComment + '</div>';
   $('.result-message1').html(title);
 
+  //google chart
   google.load('visualization', '1', { packages: ['corechart'] });
   google.setOnLoadCallback(initChart);
   
-  $(window).resize(function(){
-    initChart();
-  });
+  // $(window).resize(function(){
+  //   initChart();
+  // });
 
   function initChart() {
  
-    let data, options;
+    var data, options;
     data = google.visualization.arrayToDataTable([
         ['MostMatch', 'Percentages'],
         [prediction[0].className, parseFloat(prediction[0].probability.toFixed(2) * 100)],
@@ -103,12 +107,9 @@ async function predict() {
 
   async function drawChart(data, options) {
 			
-    var chart = await new google.visualization.PieChart(document.getElementById('chart_container'));
-    /*await*/ chart.draw(data, options);
-  
-      //it works, but sometimes takes more than 6 to 7 sec to aactually display 
+    let chart = await new google.visualization.PieChart(document.getElementById('chart_container'));
+    chart.draw(data, options); 
     document.getElementById('chart_body').style.display = 'block';    
-    //console.log(document.getElementById('chart_container'));
   }
   
   function sleep(ms) {
@@ -117,7 +118,6 @@ async function predict() {
   
   sleep(1500).then(() => {
     $('.result-message2').html(explain + comm);
-    // $('.result-message2').html("testing");
   });
   
   sleep(2000).then(() => {
