@@ -14,13 +14,11 @@ function readURL(input) {
   } 
 }
 
-/**********************************************************
+/********************************************************** //  use crtl + / to enable or disable comments
  // The following is the same code as above.
  // but I added some of the console.log() at appropriate lines
  // so that you can see what's going on 
  // when the function is executed 
-
- // plz use crtl + / to enable or disable comments
  
 function readURL(input) {
   if (input.files && input.files[0]) {
@@ -40,10 +38,10 @@ function readURL(input) {
     
     };
     reader.readAsDataURL(input.files[0]);
-    
+    console.log(reader);
   } 
 }
-*************************************************************/
+*************************************************************/ //  use crtl + / to enable or disable comments
 
 
 /** 
