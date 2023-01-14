@@ -15,6 +15,19 @@ body {
   text-align: center;
 }
 
+.file-upload-content button {
+  background-color: #638ab8;
+  font-weight: bold;
+  border: none;
+  padding: 10px;
+}
+
+.file-upload-content button:hover {
+  border: 1px solid #2c3f55;
+  /* transition: all .1s ease; */
+  /* cursor: pointer; */
+}
+
 .file-upload-input {
   position: absolute;
   margin: 0;
