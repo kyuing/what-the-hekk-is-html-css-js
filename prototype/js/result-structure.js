@@ -8,10 +8,6 @@ async function predict() {
   // chart
   google.load();
   google.setOnLoadCallback(initChart);
-  
-  $(window).resize(function(){
-    initChart();
-  });
 
   function initChart() {
     drawChart(data, options);
